@@ -1,9 +1,8 @@
-import execa from 'execa';
 import fs from 'fs';
 import { projectInstall } from 'pkg-install';
-import getBundler from '../configuration/bundler';
-import getDependencies from '../configuration/dependencies';
-import plugins from '../configuration/plugins';
+import getBundler from '../configuration/bundler.js';
+import getDependencies from '../configuration/dependencies.js';
+import plugins from '../configuration/plugins.js';
 
 const installPackages = async (options) => {
   const bundler = await getBundler(options.bundler.toLowerCase());

@@ -38,7 +38,6 @@
       ".gitignore",
       ".prettierignore",
       "gulpfile.js",
-      "package-lock.json",
       "package.json",
       "README.md",
       "plugins.json"

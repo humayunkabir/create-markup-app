@@ -58,7 +58,7 @@ export const questions = [
     type: 'list',
     name: 'packageManager',
     message: 'What is your Package Manager?',
-    choices: ['npm'],
+    choices: ['yarn', 'pnpm', 'npm'],
   },
   {
     type: 'confirm',

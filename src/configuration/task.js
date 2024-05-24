@@ -1,6 +1,6 @@
-import installPackages from '../util/install';
-import copyTemplateFiles from '../util/copy';
-import initGit from '../util/git';
+import copyTemplateFiles from '../util/copy.js';
+import initGit from '../util/git.js';
+import installPackages from '../util/install.js';
 
 const getTaskList = (options) => [
   {

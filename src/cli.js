@@ -1,7 +1,8 @@
 import arg from 'arg';
+import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { createProject } from './main';
-import getQuestion from './questions';
+import { createProject } from './main.js';
+import getQuestion from './questions.js';
 
 function parseArgumentIntoOptions(rawArgs) {
   const args = arg(
@@ -49,7 +50,7 @@ async function promptForMissingOptions(options) {
     style: 'SCSS',
     templatingEngine: 'Pug',
     cssFramework: 'Bootstrap',
-    packageManager: 'npm',
+    packageManager: 'yarn',
     install: true,
     bundler: 'Gulp',
   };
@@ -87,7 +88,14 @@ async function promptForMissingOptions(options) {
 }
 
 export async function cli(args) {
+  const time = Date.now();
   let options = parseArgumentIntoOptions(args);
   options = await promptForMissingOptions(options);
+  console.log(options);
   await createProject(options);
+  console.log(
+    `Total time required for ${chalk.cyanBright.bold(
+      options.packageManager
+    )} is ${chalk.yellow.bold(Date.now() - time)}ms`
+  );
 }

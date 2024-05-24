@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import Listr from 'listr';
 import path from 'path';
 import { promisify } from 'util';
-import Listr from 'listr';
-import getTaskList from './configuration/task';
+import getTaskList from './configuration/task.js';
 
 const access = promisify(fs.access);
 

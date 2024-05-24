@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa } from 'execa';
 
 export default async function initGit(dir) {
   const result = await execa('git', ['init', dir]);
