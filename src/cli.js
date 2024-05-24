@@ -91,7 +91,6 @@ export async function cli(args) {
   const time = Date.now();
   let options = parseArgumentIntoOptions(args);
   options = await promptForMissingOptions(options);
-  console.log(options);
   await createProject(options);
   console.log(
     `Total time required for ${chalk.cyanBright.bold(

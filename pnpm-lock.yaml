@@ -31,6 +31,9 @@ devDependencies:
   '@types/inquirer':
     specifier: 9.0.7
     version: 9.0.7
+  '@types/listr':
+    specifier: 0.14.9
+    version: 0.14.9
 
 packages:
 
@@ -84,6 +87,13 @@ packages:
     dependencies:
       '@types/through': 0.0.33
       rxjs: 7.8.1
+    dev: true
+
+  /@types/listr@0.14.9:
+    resolution: {integrity: sha512-Ncsy/jtO/HZYrupLGcnp1BOswZVsNvggjIjnf2EZ1xECfU4hxcQ3FWvFEyR+/DXssz0HDm74Op/tEsyrB3eV5w==}
+    dependencies:
+      '@types/node': 11.15.54
+      rxjs: 6.6.7
     dev: true
 
   /@types/node@11.15.54:
@@ -860,7 +870,6 @@ packages:
     engines: {npm: '>=2.0.0'}
     dependencies:
       tslib: 1.14.1
-    dev: false
 
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
@@ -1026,7 +1035,6 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: false
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}

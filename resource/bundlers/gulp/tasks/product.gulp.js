@@ -11,6 +11,6 @@ gulp.task('product', () =>
     .src(product.paths, {
       base: './',
     })
-    .pipe(zip(`${name}-${version}.zip`))
+    .pipe(zip(`releases/${name}-${version}.zip`))
     .pipe(gulp.dest('./'))
 );

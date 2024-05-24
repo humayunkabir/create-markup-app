@@ -9,7 +9,7 @@ The easiest way to bootstrap a Markup(Front-end) project is by using create-mark
 npx create-markup-app <project-name>
 ```
 
-## Options
+<!-- ## Options
 create-markup-app comes with the following options:
 
 - **-y, --yes**: Default Project Setup.
@@ -29,11 +29,13 @@ create-markup-app comes with the following options:
 - **-p, --packageManager**: `--p <name>, -p=<name>, --packageManager <name> or --packageManager=<name>`
   
   Available options: 
-  - npm (default)
+  - yarn (default)
+  - pnpm
+  - npm
 - **-b, --bundler**: `--b <name>, -b=<name>, --bundler <name> or --bundler=<name>`
   
   Available options: 
-  - Gulp (default)
+  - Gulp (default) -->
 
 ## Why use Create Markup?
 create-markup-app allows you to create a new project within seconds. It is officially maintained by the  [Humayun Kabir](https://github.com/humayunkabir), and includes a couple of benefits:
