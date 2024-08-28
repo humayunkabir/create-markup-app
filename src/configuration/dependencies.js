@@ -1,4 +1,4 @@
-const getDependencies = (options) => {
+export default function getDependencies(options) {
   switch (options.cssFramework) {
     case 'Bootstrap':
       return {
@@ -6,6 +6,4 @@ const getDependencies = (options) => {
         bootstrap: '5.3.3',
       };
   }
-};
-
-export default getDependencies;
+}

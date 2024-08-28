@@ -1,4 +1,4 @@
-const plugins = {
+export default {
   bootstrap: {
     src: ['dist/js/bootstrap.min.js', 'dist/js/bootstrap.min.js.map'],
     dest: 'bootstrap',
@@ -8,5 +8,3 @@ const plugins = {
     dest: 'popper',
   },
 };
-
-export default plugins;

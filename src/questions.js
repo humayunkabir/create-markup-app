@@ -72,7 +72,6 @@ export const questions = [
   },
 ];
 
-const getQuestion = (name) =>
-  questions.find((question) => question.name === name);
-
-export default getQuestion;
+export default function getQuestion(name) {
+  return questions.find((question) => question.name === name);
+}

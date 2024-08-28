@@ -143,3 +143,6 @@ benchmarks/graphs
 # IDE
 .vscode
 .idea
+
+# Bun
+bun.lockb

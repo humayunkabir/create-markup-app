@@ -57,6 +57,6 @@ const bundlers = {
   },
 };
 
-const getBundler = async (bundler) => bundlers[bundler];
-
-export default getBundler;
+export default async function getBundler(bundler) {
+  return bundlers[bundler];
+}

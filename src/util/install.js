@@ -4,7 +4,7 @@ import getBundler from '../configuration/bundler.js';
 import getDependencies from '../configuration/dependencies.js';
 import plugins from '../configuration/plugins.js';
 
-const installPackages = async (options) => {
+export default async function installPackages(options) {
   const bundler = await getBundler(options.bundler.toLowerCase());
   const packageJson = JSON.stringify(
     {
@@ -36,6 +36,4 @@ const installPackages = async (options) => {
   });
 
   console.log(stdout);
-};
-
-export default installPackages;
+}
