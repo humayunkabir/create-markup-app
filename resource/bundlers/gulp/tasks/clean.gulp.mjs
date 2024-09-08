@@ -1,17 +1,22 @@
-const gulp = require('gulp');
-const del = require('del');
+import { deleteAsync } from 'del';
 
-const { paths, baseDir, version } = require('./utils');
+import { baseDir, paths, version } from './utils.mjs';
 
 /* -------------------------------------------------------------------------- */
 /*                                    Clean                                   */
 /* -------------------------------------------------------------------------- */
-gulp.task('clean', () =>
-  del([
+export default async function clean() {
+  await deleteAsync([
     `${baseDir}/${paths.style.dest}/**/*.*`,
     `${baseDir}/${paths.script.dest}/**/*.*`,
     `${baseDir}/**/*.html`,
-  ])
-);
-gulp.task('clean:build', () => del(paths.dir.prod));
-gulp.task('clean:live', () => del(`live/${version}`));
+  ]);
+}
+
+export async function cleanBuild() {
+  await deleteAsync(paths.dir.prod);
+}
+
+export async function cleanLive() {
+  await deleteAsync(`live/${version}`);
+}

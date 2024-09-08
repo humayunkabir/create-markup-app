@@ -1,29 +1,28 @@
-const gulp = require('gulp');
-const del = require('del');
+import { deleteSync } from 'del';
+import { dest, src } from 'gulp';
 
-const { dependencies, plugins, baseDir, isIterableArray } = require('./utils');
+import { baseDir, dependencies, isIterableArray, plugins } from './utils.mjs';
 
 /* -------------------------------------------------------------------------- */
 /*                                   plugin                                   */
 /* -------------------------------------------------------------------------- */
 // Move plugin css and js files from node_modules to public folder
 
-gulp.task('plugin:temp', () => {
+async function pluginTemp() {
   const modules = Object.keys(dependencies).map((key) => `${key}/**/*`);
 
-  return gulp
-    .src(modules, { cwd: 'node_modules', base: './node_modules' })
-    .pipe(gulp.dest('temp'));
-});
+  return src(modules, { cwd: 'node_modules', base: './node_modules' }).pipe(
+    dest('temp')
+  );
+}
 
-gulp.task('plugin:move', () => {
+async function pluginMove() {
   const promises = [];
   const addToPromises = (src, dest) =>
     promises.push(
       new Promise((resolve, reject) => {
-        gulp
-          .src(src)
-          .pipe(gulp.dest(dest))
+        src(src)
+          .pipe(dest(dest))
           .on('end', (err) => {
             if (err) {
               console.log(err);
@@ -72,15 +71,17 @@ gulp.task('plugin:move', () => {
     }
   });
   return Promise.all(promises);
-});
+}
 
-gulp.task('plugin:clean', () => {
+async function pluginClean() {
   const directories = Object.keys(plugins).map(
     (plugin) => `${baseDir}/plugins/${plugins[plugin].dest}`
   );
   const targetedDirectories = [...directories, 'temp'];
 
-  return del(targetedDirectories);
-});
+  return deleteSync(targetedDirectories);
+}
 
-gulp.task('plugin', gulp.series('plugin:clean', 'plugin:move'));
+export default async function plugin() {
+  series(pluginClean, pluginMove);
+}

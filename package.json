@@ -1,6 +1,6 @@
 {
   "name": "create-markup-app",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A CLI to bootstrap markup(front-end) project",
   "main": "src/index.js",
   "type": "module",

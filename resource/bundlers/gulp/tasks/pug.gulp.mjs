@@ -1,15 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
-const gulp = require('gulp');
-const pretty = require('pretty');
-const pug = require('pug');
-const gulpPug = require('gulp-pug');
-const gulpData = require('gulp-data');
-const gulpJsbeautifier = require('gulp-jsbeautifier');
-const ansi = require('ansi');
-const { v4: uuid } = require('uuid');
-const { name, version, paths, baseDir, isProd } = require('./utils');
+import ansi from 'ansi';
+import fs from 'fs';
+import { dest, src } from 'gulp';
+import gulpData from 'gulp-data';
+import gulpJsbeautifier from 'gulp-jsbeautifier';
+import gulpPug from 'gulp-pug';
+import path from 'path';
+import pretty from 'pretty';
+import pug from 'pug';
+import url from 'url';
+import { v4 as uuid } from 'uuid';
+
+import { baseDir, isProd, name, paths, version } from './utils.mjs';
 
 const cursor = ansi(process.stdout);
 
@@ -50,10 +51,10 @@ const locals = {
   },
 };
 
-/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-|  Pug compiling | middleware
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
-const compilePug = (req, res, next) => {
+/* -------------------------------------------------------------------------- */
+/*                         Pug compiling | middleware                         */
+/* -------------------------------------------------------------------------- */
+export async function compilePug(req, res, next) {
   const parsed = url.parse(req.url);
 
   const mkdir = (dir) => {
@@ -90,15 +91,14 @@ const compilePug = (req, res, next) => {
   }
 
   next();
-};
+}
 
-gulp.task('pug', () =>
-  gulp
-    .src(paths.pug.src.pages, {
-      cwd: paths.pug.base,
-      // This causes the components and docs subfolders to be mirrored in dist folder
-      base: paths.pug.base,
-    })
+export default async function pugTask() {
+  src(paths.pug.src.pages, {
+    cwd: paths.pug.base,
+    // This causes the components and docs subfolders to be mirrored in dist folder
+    base: paths.pug.base,
+  })
     .pipe(
       gulpData((file) => ({
         ...file,
@@ -120,7 +120,5 @@ gulp.task('pug', () =>
         verbosity: gulpJsbeautifier.report.ALL,
       })
     )
-    .pipe(gulp.dest(`${baseDir}/${paths.pug.dest}`))
-);
-
-module.exports = { compilePug };
+    .pipe(dest(`${baseDir}/${paths.pug.dest}`));
+}

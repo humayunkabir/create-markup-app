@@ -1,17 +1,17 @@
-const gulp = require('gulp');
-const { argv } = require('yargs');
-const w3cjs = require('gulp-w3cjs');
-const through = require('through2');
-const ansi = require('ansi');
+import ansi from 'ansi';
+import { src } from 'gulp';
+import w3cjs from 'gulp-w3cjs';
+import through from 'through2';
+import { argv } from 'yargs';
 
-const { paths, baseDir } = require('./utils');
+import { baseDir, paths } from './utils';
 
 const cursor = ansi(process.stdout);
 
 /* -------------------------------------------------------------------------- */
 /*                           w3c validation for HTML                          */
 /* -------------------------------------------------------------------------- */
-gulp.task('w3c', (done) => {
+export default async function w3c(done) {
   let htmlfiles = `${baseDir}/${paths.pug.dest}/**/*.html`;
   if (argv.html) {
     htmlfiles = `${paths.dir.dev}/${argv.html}.html`;
@@ -20,8 +20,7 @@ gulp.task('w3c', (done) => {
     cursor.reset();
   }
 
-  return gulp
-    .src(htmlfiles)
+  return src(htmlfiles)
     .pipe(w3cjs())
     .pipe(
       through.obj((file, enc, cb) => {
@@ -33,7 +32,5 @@ gulp.task('w3c', (done) => {
       })
     )
     .pipe(w3cjs.reporter())
-    .on('end', () => {
-      done();
-    });
-});
+    .on('end', done);
+}

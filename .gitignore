@@ -141,8 +141,8 @@ package-lock.json
 benchmarks/graphs
 
 # IDE
-.vscode
-.idea
+# .vscode
+# .idea
 
 # Bun
 bun.lockb

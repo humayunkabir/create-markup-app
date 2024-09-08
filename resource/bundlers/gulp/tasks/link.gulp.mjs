@@ -1,7 +1,6 @@
-const gulp = require('gulp');
-const { SiteChecker } = require('broken-link-checker');
+import { SiteChecker } from 'broken-link-checker';
 
-gulp.task('check-links', (done) => {
+export async function checkLinks(end) {
   const siteChecker = new SiteChecker(
     {
       filterLevel: 0,
@@ -18,10 +17,8 @@ gulp.task('check-links', (done) => {
       excludeLinksToSamePage: true,
     },
     {
-      error: (error) => {
-        console.error(error);
-      },
-      link: (result) => {
+      error: console.error,
+      link(result) {
         if (result.broken) {
           console.log({
             broken: result.broken,
@@ -35,11 +32,9 @@ gulp.task('check-links', (done) => {
           process.stdout.write('.');
         }
       },
-      end: () => {
-        done();
-      },
+      end,
     }
   );
 
   siteChecker.enqueue('http://127.0.0.1:3000');
-});
+}

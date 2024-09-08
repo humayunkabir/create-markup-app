@@ -1,30 +1,36 @@
-const gulp = require('gulp');
-const requireDir = require('require-dir');
+import { parallel, series, task } from 'gulp';
 
-requireDir('./tasks');
+import assets from './tasks/assets.gulp.mjs';
+import { buildPush, buildStatic } from './tasks/build.gulp.mjs';
+import clean, { cleanBuild, cleanLive } from './tasks/clean.gulp.mjs';
+import plugin from './tasks/plugins.gulp.mjs';
+import product from './tasks/product.gulp.mjs';
+import pugTask from './tasks/pug.gulp.mjs';
+import script, { scriptWebpack } from './tasks/script.gulp.mjs';
+import style from './tasks/style.gulp.mjs';
+import watchAll from './tasks/watch.gulp.mjs';
 
 /* -------------------------------------------------------------------------- */
 /*                                   Compile                                  */
 /* -------------------------------------------------------------------------- */
-gulp.task(
-  'compile',
-  gulp.parallel('style', 'script', 'script:webpack', 'plugin', 'assets')
-);
-gulp.task('compile:all', gulp.parallel('compile', 'pug'));
+async function compile() {
+  parallel(style, script, scriptWebpack, plugin, assets);
+}
+task('compile:all', parallel(compile, pugTask));
 
 /* -------------------------------------------------------------------------- */
 /*                                   Deploy                                   */
 /* -------------------------------------------------------------------------- */
-gulp.task('build', gulp.series('clean:build', 'build:static', 'compile:all'));
-gulp.task('build:test', gulp.series('build', 'watch'));
-gulp.task('live', gulp.series('clean:live', 'build', 'build:push'));
+task('build', series(cleanBuild, buildStatic, 'compile:all'));
+task('build:test', series('build', watchAll));
+task('live', series(cleanLive, 'build', buildPush));
 
 /* -------------------------------------------------------------------------- */
 /*                         Run development environment                        */
 /* -------------------------------------------------------------------------- */
-gulp.task('default', gulp.series('clean', 'compile', 'watch'));
+task('default', series(clean, compile, watchAll));
 
 /* -------------------------------------------------------------------------- */
 /*                                   Product                                  */
 /* -------------------------------------------------------------------------- */
-gulp.task('product:make', gulp.series('compile:all', 'product'));
+task('product:make', series('compile:all', product));
