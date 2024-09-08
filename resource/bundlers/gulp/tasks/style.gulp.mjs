@@ -1,34 +1,36 @@
-const gulp = require('gulp');
-const rename = require('gulp-rename');
-const { sassSync } = require('@mr-hope/gulp-sass');
-const rtlcss = require('gulp-rtlcss');
-const autoprefixer = require('gulp-autoprefixer');
-const sourcemaps = require('gulp-sourcemaps');
-const gulpIf = require('gulp-if');
-const clone = require('gulp-clone');
-const merge = require('merge-stream');
+import { sass } from '@mr-hope/gulp-sass';
+import { dest, src } from 'gulp';
+import autoprefixer from 'gulp-autoprefixer';
+import clone from 'gulp-clone';
+import gulpIf from 'gulp-if';
+import rename from 'gulp-rename';
+import rtlcss from 'gulp-rtlcss';
+import sourcemaps from 'gulp-sourcemaps';
+import merge from 'merge-stream';
 
-const { paths, baseDir, browserSync } = require('./utils');
+import { baseDir, browserSync, paths } from './utils.mjs';
 
-const getOption = (outputStyle) => ({
-  outputStyle,
-  precision: 5, // rounding of css color values, etc..
-});
+function getOption(outputStyle) {
+  return {
+    outputStyle,
+    precision: 5, // rounding of css color values, etc..
+  };
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                SCSS Compile                                */
 /* -------------------------------------------------------------------------- */
-gulp.task('style', () => {
-  const sourcemapsStream = gulp.src(paths.style.src).pipe(sourcemaps.init());
+export default async function style() {
+  const sourcemapsStream = src(paths.style.src).pipe(sourcemaps.init());
 
   const expandedStream = sourcemapsStream
     .pipe(clone())
-    .pipe(sassSync(getOption('expanded')).on('error', sassSync.logError))
+    .pipe(sass(getOption('expanded')).on('error', sass.logError))
     .pipe(autoprefixer({ cascade: false }));
 
   const compressedStream = sourcemapsStream
     .pipe(clone())
-    .pipe(sassSync(getOption('compressed')).on('error', sassSync.logError))
+    .pipe(sass(getOption('compressed')).on('error', sass.logError))
     .pipe(autoprefixer({ cascade: false }));
 
   const ltrCompressedStream = compressedStream
@@ -52,6 +54,6 @@ gulp.task('style', () => {
     rtlCompressedStream
   )
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(`${baseDir}/${paths.style.dest}`))
+    .pipe(dest(`${baseDir}/${paths.style.dest}`))
     .pipe(browserSync.stream());
-});
+}

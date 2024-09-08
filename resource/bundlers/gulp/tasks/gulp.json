@@ -35,9 +35,9 @@
       "src/**/*.*",
       ".babelrc",
       ".eslintrc",
+      "gitignore.txt",
       ".prettierignore",
-      "gitignore",
-      "gulpfile.js",
+      "gulpfile.mjs",
       "package.json",
       "README.md",
       "plugins.json"

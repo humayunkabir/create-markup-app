@@ -1,28 +1,22 @@
-const gulp = require('gulp');
-const sourcemaps = require('gulp-sourcemaps');
-const eslint = require('gulp-eslint');
-const rename = require('gulp-rename');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const replace = require('gulp-replace');
-const concat = require('gulp-concat');
-const clone = require('gulp-clone');
-const merge = require('merge-stream');
-const webpackStream = require('webpack-stream');
+import { dest, src } from 'gulp';
+import babel from 'gulp-babel';
+import clone from 'gulp-clone';
+import concat from 'gulp-concat';
+import eslint from 'gulp-eslint';
+import rename from 'gulp-rename';
+import replace from 'gulp-replace';
+import sourcemaps from 'gulp-sourcemaps';
+import uglify from 'gulp-uglify';
+import merge from 'merge-stream';
+import webpackStream from 'webpack-stream';
 
-const {
-  paths,
-  baseDir,
-  isProd,
-  browserSync: { reload },
-} = require('./utils');
+import { baseDir, browserSync, isProd, paths } from './utils.mjs';
 
 /* -------------------------------------------------------------------------- */
 /*                       JavaScript Compile with Webpack                      */
 /* -------------------------------------------------------------------------- */
-gulp.task('script:webpack', () =>
-  gulp
-    .src('./src/js/index.js')
+export async function scriptWebpack() {
+  src('./src/js/index.js')
     .pipe(
       webpackStream({
         mode: isProd ? 'production' : 'development',
@@ -34,16 +28,16 @@ gulp.task('script:webpack', () =>
         },
       })
     )
-    .pipe(gulp.dest(`${baseDir}/js`))
-);
+    .pipe(dest(`${baseDir}/js`));
+}
 
 /* -------------------------------------------------------------------------- */
 /*                             JavaScript Compile                             */
 /* -------------------------------------------------------------------------- */
 
-gulp.task('script', () => {
+export default async function script() {
   /* ------------------------------ Theme script ------------------------------ */
-  const sourceStream = gulp.src(paths.script.src);
+  const sourceStream = src(paths.script.src);
   const jsStream = sourceStream
     .pipe(clone())
     .pipe(sourcemaps.init())
@@ -61,8 +55,8 @@ gulp.task('script', () => {
 
   return merge(jsStream, compressedStream)
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(`${baseDir}/${paths.script.dest}`))
+    .pipe(dest(`${baseDir}/${paths.script.dest}`))
     .on('end', () => {
-      reload();
+      browserSync.browserSync;
     });
-});
+}

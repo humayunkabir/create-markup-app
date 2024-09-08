@@ -1,9 +1,9 @@
-const gulp = require('gulp');
-const { paths, baseDir } = require('./utils');
+import { dest, src } from 'gulp';
+import { baseDir, paths } from './utils.mjs';
 
 /* -------------------------------------------------------------------------- */
 /*                                   Assets                                   */
 /* -------------------------------------------------------------------------- */
-gulp.task('assets', () =>
-  gulp.src(paths.assets.src).pipe(gulp.dest(`${baseDir}/${paths.assets.dest}`))
-);
+export default async function assets() {
+  src(paths.assets.src).pipe(dest(`${baseDir}/${paths.assets.dest}`));
+}
